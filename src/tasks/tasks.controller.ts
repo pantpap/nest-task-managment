@@ -1,10 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { Task, TaskStatus } from './task.model';
+import { Task } from './task.model';
 
 @Controller('tasks')
 export class TasksController {
-  private tasks: Task[] = [];
   constructor(private tasksService: TasksService) {}
 
   @Get()
@@ -12,15 +11,11 @@ export class TasksController {
     return this.tasksService.getAllTasks();
   }
 
-
-  createTaks(title: string, description: string): Task {
-    const task: Task = {
-      id: '',
-      title,
-      description,
-      status: TaskStatus.OPEN,
-    };
-    this.tasks.push(task);
-    return task;
+  @Post()
+  createTask(
+    @Body('title') title: string,
+    @Body('description') description: string,
+  ): Task {
+    return this.tasksService.createTask(title, description);
   }
 }
