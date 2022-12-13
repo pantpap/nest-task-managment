@@ -12,7 +12,7 @@ export class TasksController {
     return this.tasksService.getAllTasks();
   }
 
-  @Get(':/id')
+  @Get('/:id')
   getTaskById(@Param('id') id: string): Task {
     return this.tasksService.getTaskById(id);
   }
